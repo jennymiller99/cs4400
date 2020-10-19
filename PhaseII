@@ -1,0 +1,17 @@
+DROP DATABASE IF EXISTS covid;
+CREATE DATABASE IF NOT EXISTS covid;
+USE covid;
+
+DROP TABLE IF EXISTS student;
+CREATE TABLE student (
+	username varchar(100) NOT NULL,
+    passsword varchar(100) NOT NULL,
+    housing_type 
+    email varchar(25) NOT NULL,
+    first_name varchar(20) NOT NULL,
+    last_name varchar(20) NOT NULL,
+    phone_number integer(10)
+    location_name varchar(20)
+)
+    
+    
