@@ -5,13 +5,92 @@ USE covid;
 DROP TABLE IF EXISTS student;
 CREATE TABLE student (
 	username varchar(100) NOT NULL,
-    passsword varchar(100) NOT NULL,
-    housing_type 
+    pass varchar(100) NOT NULL,
+    housing_type DEFAULT NULL,
     email varchar(25) NOT NULL,
     first_name varchar(20) NOT NULL,
     last_name varchar(20) NOT NULL,
-    phone_number integer(10)
+    phone_number integer(10) DEFAULT NULL, 
     location_name varchar(20)
-)
+    PRIMARY KEY (username)
+);
+
+DROP TABLE IF EXISTS employee;
+CREATE TABLE employee (
+	username varchar(20) NOT NULL,
+    phone_number integer(10) DEFAULT NULL,
+    email varchar(25) NOT NULL,
+    pass varchar(100) NOT NULL,
+    first_name varchar(20) NOT NULL,
+    last_name varchar(20) NOT NULL,
+    is_lab_technician 
+    is_site_tester
+    PRIMARY KEY (username)
+);
+
+DROP TABLE IF EXISTS admin;
+CREATE TABLE admin (
+	username varchar(20) NOT NULL,
+    phone_number integer(10) DEFAULT NULL,
+    email varchar(25) NOT NULL,
+    pass varchar(100) NOT NULL,
+    first_name varchar(20) NOT NULL,
+    last_name varchar(20) NOT NULL
+    PRIMARY KEY (username)
+);
+
+DROP TABLE IF EXISTS appointment;
+CREATE TABLE appointment (
+	apt_date
+    apt_time
+    located_at 
+    scheduled_by
+    FOREIGN KEY (located_at) REFERENCES site(name)
+    FOREIGN KEY (scheduled_by) REFERENCES employee(username)
+);
+
+DROP TABLE IF EXISTS location;
+CREATE TABLE location (
+	location_name varchar(100) NOT NULL,
+    PRIMARY KEY (location_name)
+);
+
+DROP TABLE IF EXISTS site;
+CREATE TABLE site (
+	name
+    street
+    city
+    zip
+    state
+    located
+    PRIMARY KEY (name),
+    FOREIGN KEY (located) REFERENCES location(name)
+);
+
+DROP TABLE IF EXISTS test;
+CREATE TABLE test (
+	id
+    test_status
+    pool_id
+    appointment_time
+    PRIMARY KEY (id),
+    FOREIGN KEY (pool_id) REFERENCES pool (id),
+    FOREIGN KEY (appointment_time) REFERENCES appotintment(apt_date, apt_time)
     
-    
+);
+
+DROP TABLE IF EXISTS pool;
+CREATE TABLE pool (
+	id
+    pool_status
+    pool_date
+    test_num
+    username
+    PRIMARY KEY (id)
+    FOREIGN KEY (test_num) REFERENCES test(id),
+    FOREIGN KEY (username) REFERENCES employee(username)
+);
+
+
+
+
