@@ -64,6 +64,7 @@ CREATE TABLE appointment (
     apt_time time NOT NULL,
     located_at varchar(100) NOT NULL,
     scheduled_by varchar(100) NOT NULL,
+    PRIMARY KEY (apt_date,apt_time),
     FOREIGN KEY (located_at) REFERENCES site(site_name),
     FOREIGN KEY (scheduled_by) REFERENCES student(username)
 );
@@ -88,6 +89,6 @@ CREATE TABLE test (
     appointment_time time NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (pool_id) REFERENCES pool(id),
-    FOREIGN KEY (appointment_time) REFERENCES appotintment(apt_date, apt_time)
-    
+    FOREIGN KEY (appointment_time) REFERENCES appointment(apt_time)
 );
+
