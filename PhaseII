@@ -65,7 +65,7 @@ CREATE TABLE appointment (
     located_at varchar(100) NOT NULL,
     scheduled_by varchar(100) NOT NULL,
     FOREIGN KEY (located_at) REFERENCES site(site_name),
-    FOREIGN KEY (scheduled_by) REFERENCES employee(username)
+    FOREIGN KEY (scheduled_by) REFERENCES student(username)
 );
 
 
