@@ -6,12 +6,12 @@ DROP TABLE IF EXISTS student;
 CREATE TABLE student (
     username varchar(100) NOT NULL,
     pass varchar(100) NOT NULL,
-    housing_type DEFAULT NULL,
+    housing_type varchar(100) NOT NULL,
     email varchar(25) NOT NULL,
     first_name varchar(20) NOT NULL,
     last_name varchar(20) NOT NULL,
     phone_number integer(10) DEFAULT NULL, 
-    location_name varchar(20)
+    location_name varchar(20) NOT NULL,
     PRIMARY KEY (username)
 );
 
@@ -31,22 +31,12 @@ CREATE TABLE employee (
 DROP TABLE IF EXISTS admin;
 CREATE TABLE admin (
     username varchar(100) NOT NULL,
-    phone_number integer(10) DEFAULT NULL,
+    phone_number integer(10) NOT NULL,
     email varchar(25) NOT NULL,
     pass varchar(100) NOT NULL,
     first_name varchar(20) NOT NULL,
-    last_name varchar(20) NOT NULL
+    last_name varchar(20) NOT NULL,
     PRIMARY KEY (username)
-);
-
-DROP TABLE IF EXISTS appointment;
-CREATE TABLE appointment (
-    apt_date date
-    apt_time time
-    located_at varchar(100)
-    scheduled_by varchar(100)
-    FOREIGN KEY (located_at) REFERENCES site(name)
-    FOREIGN KEY (scheduled_by) REFERENCES employee(username)
 );
 
 DROP TABLE IF EXISTS location;
@@ -55,42 +45,51 @@ CREATE TABLE location (
     PRIMARY KEY (location_name)
 );
 
+
 DROP TABLE IF EXISTS site;
 CREATE TABLE site (
-    name varchar(100)
-    street varchar(100)
-    city varchar(100)
-    zip varchar(5)
-    state varchar(100)
-    located varchar(100)
-    PRIMARY KEY (name),
-    FOREIGN KEY (located) REFERENCES location(name)
+    site_name varchar(100) NOT NULL,
+    street varchar(100) NOT NULL,
+    city varchar(100) NOT NULL,
+    zip varchar(5) NOT NULL,
+    state varchar(100) NOT NULL,
+    located varchar(100) NOT NULL,
+    PRIMARY KEY (site_name),
+    FOREIGN KEY (located) REFERENCES location(location_name)
 );
 
-DROP TABLE IF EXISTS test;
-CREATE TABLE test (
-    id 
-    test_status
-    pool_id
-    appointment_time time 
-    PRIMARY KEY (id),
-    FOREIGN KEY (pool_id) REFERENCES pool (id),
-    FOREIGN KEY (appointment_time) REFERENCES appotintment(apt_date, apt_time)
-    
+DROP TABLE IF EXISTS appointment;
+CREATE TABLE appointment (
+    apt_date date NOT NULL,
+    apt_time time NOT NULL,
+    located_at varchar(100) NOT NULL,
+    scheduled_by varchar(100) NOT NULL,
+    FOREIGN KEY (located_at) REFERENCES site(site_name),
+    FOREIGN KEY (scheduled_by) REFERENCES employee(username)
 );
+
 
 DROP TABLE IF EXISTS pool;
 CREATE TABLE pool (
-    id
-    pool_status
-    pool_date date
-    test_num
-    username
-    PRIMARY KEY (id)
+    id varchar(100) NOT NULL,
+    pool_status varchar(100) NOT NULL,
+    pool_date date NOT NULL,
+    test_num varchar(100) NOT NULL,
+    username varchar(100) NOT NULL,
+    PRIMARY KEY (id),
     FOREIGN KEY (test_num) REFERENCES test(id),
     FOREIGN KEY (username) REFERENCES employee(username)
 );
 
 
-
-
+DROP TABLE IF EXISTS test;
+CREATE TABLE test (
+    id varchar(100) NOT NULL,
+    test_status varchar(100) NOT NULL,
+    pool_id varchar(100) NOT NULL,
+    appointment_time time NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (pool_id) REFERENCES pool (id),
+    FOREIGN KEY (appointment_time) REFERENCES appotintment(apt_date, apt_time)
+    
+);
