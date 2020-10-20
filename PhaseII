@@ -74,10 +74,8 @@ CREATE TABLE pool (
     id varchar(100) NOT NULL,
     pool_status varchar(100) NOT NULL,
     pool_date date NOT NULL,
-    test_num varchar(100) NOT NULL,
     username varchar(100) NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (test_num) REFERENCES test(id),
     FOREIGN KEY (username) REFERENCES employee(username)
 );
 
