@@ -4,7 +4,7 @@ USE covid;
 
 DROP TABLE IF EXISTS student;
 CREATE TABLE student (
-	username varchar(100) NOT NULL,
+    username varchar(100) NOT NULL,
     pass varchar(100) NOT NULL,
     housing_type DEFAULT NULL,
     email varchar(25) NOT NULL,
@@ -17,20 +17,20 @@ CREATE TABLE student (
 
 DROP TABLE IF EXISTS employee;
 CREATE TABLE employee (
-	username varchar(20) NOT NULL,
+    username varchar(100) NOT NULL,
     phone_number integer(10) DEFAULT NULL,
     email varchar(25) NOT NULL,
     pass varchar(100) NOT NULL,
     first_name varchar(20) NOT NULL,
     last_name varchar(20) NOT NULL,
-    is_lab_technician 
-    is_site_tester
+    is_lab_technician tinyint(1) NOT NULL,
+    is_site_tester tinyint(1) NOT NULL,
     PRIMARY KEY (username)
 );
 
 DROP TABLE IF EXISTS admin;
 CREATE TABLE admin (
-	username varchar(20) NOT NULL,
+    username varchar(100) NOT NULL,
     phone_number integer(10) DEFAULT NULL,
     email varchar(25) NOT NULL,
     pass varchar(100) NOT NULL,
@@ -41,38 +41,38 @@ CREATE TABLE admin (
 
 DROP TABLE IF EXISTS appointment;
 CREATE TABLE appointment (
-	apt_date
-    apt_time
-    located_at 
-    scheduled_by
+    apt_date date
+    apt_time time
+    located_at varchar(100)
+    scheduled_by varchar(100)
     FOREIGN KEY (located_at) REFERENCES site(name)
     FOREIGN KEY (scheduled_by) REFERENCES employee(username)
 );
 
 DROP TABLE IF EXISTS location;
 CREATE TABLE location (
-	location_name varchar(100) NOT NULL,
+    location_name varchar(100) NOT NULL,
     PRIMARY KEY (location_name)
 );
 
 DROP TABLE IF EXISTS site;
 CREATE TABLE site (
-	name
-    street
-    city
-    zip
-    state
-    located
+    name varchar(100)
+    street varchar(100)
+    city varchar(100)
+    zip varchar(5)
+    state varchar(100)
+    located varchar(100)
     PRIMARY KEY (name),
     FOREIGN KEY (located) REFERENCES location(name)
 );
 
 DROP TABLE IF EXISTS test;
 CREATE TABLE test (
-	id
+    id 
     test_status
     pool_id
-    appointment_time
+    appointment_time time 
     PRIMARY KEY (id),
     FOREIGN KEY (pool_id) REFERENCES pool (id),
     FOREIGN KEY (appointment_time) REFERENCES appotintment(apt_date, apt_time)
@@ -81,9 +81,9 @@ CREATE TABLE test (
 
 DROP TABLE IF EXISTS pool;
 CREATE TABLE pool (
-	id
+    id
     pool_status
-    pool_date
+    pool_date date
     test_num
     username
     PRIMARY KEY (id)
